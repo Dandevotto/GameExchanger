@@ -45,4 +45,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(platform(libs.firebase.bom))
     implementation("com.google.firebase:firebase-firestore")
+
+
 }
