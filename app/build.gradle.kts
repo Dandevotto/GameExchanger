@@ -45,6 +45,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(platform(libs.firebase.bom))
     implementation("com.google.firebase:firebase-firestore")
-
-
+    implementation ("com.firebaseui:firebase-ui-firestore:8.0.2")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
 }
