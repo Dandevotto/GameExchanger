@@ -82,7 +82,7 @@ public class DetailActivity extends AppCompatActivity {
     private void getUsers(){
         Query query = userConnector.getUserStoredGame(gameId);
         FirestoreRecyclerOptions<User> users = new FirestoreRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
-        usersAdapter = new UsersAdapter(users, DetailActivity.this);
+        usersAdapter = new UsersAdapter(users, DetailActivity.this, gameImageURL);
         binding.userRecycler.setAdapter(usersAdapter);
         usersAdapter.startListening();
 

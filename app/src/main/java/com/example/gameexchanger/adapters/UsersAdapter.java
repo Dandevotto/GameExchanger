@@ -15,15 +15,15 @@ import com.example.gameexchanger.model.User;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
-import java.lang.reflect.Array;
-
 public class UsersAdapter extends FirestoreRecyclerAdapter<User, UsersAdapter.ViewHolder> {
 
     Context ctx;
+    String gameImage;
 
-    public UsersAdapter(FirestoreRecyclerOptions<User> options, Context ctx){
+    public UsersAdapter(FirestoreRecyclerOptions<User> options, Context ctx, String gameImage){
         super(options);
         this.ctx = ctx;
+        this.gameImage = gameImage;
     }
 
     @Override
@@ -31,12 +31,14 @@ public class UsersAdapter extends FirestoreRecyclerAdapter<User, UsersAdapter.Vi
 
         viewHolder.tvUsername.setText(user.getUsername());
 
+
         viewHolder.userCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent(ctx, UserDetailActivity.class);
                 intent.putExtra("username", user.getUsername());
+                intent.putExtra("gameImage", gameImage);
                 intent.putStringArrayListExtra("gamesCollection", user.getGamesCollection());
                 intent.putStringArrayListExtra("wishList", user.getWishList());
                 intent.putExtra("userId", user.getId());

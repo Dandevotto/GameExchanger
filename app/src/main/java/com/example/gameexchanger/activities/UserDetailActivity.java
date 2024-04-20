@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.gameexchanger.adapters.CollectionGamesAdapter;
 import com.example.gameexchanger.connectors.GameConnector;
 import com.example.gameexchanger.databinding.ActivityUserDetailBinding;
@@ -26,6 +27,7 @@ public class UserDetailActivity extends AppCompatActivity {
     private ArrayList<String> wishList;
     private GameConnector gameConnector;
     private CollectionGamesAdapter collectionGamesAdapter;
+    private String gameImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class UserDetailActivity extends AppCompatActivity {
         username = getIntent().getStringExtra("username");
         gamesCollection = getIntent().getStringArrayListExtra("gamesCollection");
         wishList = getIntent().getStringArrayListExtra("wishList");
+        gameImage = getIntent().getStringExtra("gameImage");
 
         gameConnector = new GameConnector();
         GridLayoutManager collectionGridLayoutManager = new GridLayoutManager(this, 2);
@@ -46,6 +49,8 @@ public class UserDetailActivity extends AppCompatActivity {
 
         binding.tvGameCollection.setText("COLECCIÓN DE "+username.toUpperCase());
         binding.tvWishList.setText("A "+username.toUpperCase()+" LE INTERESA");
+
+        Glide.with(this).load(gameImage).into(binding.ivGame);
 
         this.registerForContextMenu(binding.recyclerCollection);
         this.registerForContextMenu(binding.recyclerWhislist);
@@ -79,6 +84,7 @@ public class UserDetailActivity extends AppCompatActivity {
                         String system = documentSnapshot.getString("system");
                         String title = documentSnapshot.getString("title");
 
+
                         Game game = new Game();
                         game.setId(id);
                         game.setGenre(genre);
@@ -88,7 +94,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
                         games.add(game);
                     }
-                    collectionGamesAdapter = new CollectionGamesAdapter(UserDetailActivity.this, games);
+                    collectionGamesAdapter = new CollectionGamesAdapter(UserDetailActivity.this, games, userId, username);
                     recyclerView.setAdapter(collectionGamesAdapter);
                 }
             });
@@ -117,7 +123,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
                         gameList.add(game);
                     }
-                    collectionGamesAdapter = new CollectionGamesAdapter(UserDetailActivity.this, gameList);
+                    collectionGamesAdapter = new CollectionGamesAdapter(UserDetailActivity.this, gameList, userId, username);
                     binding.recyclerWhislist.setAdapter(collectionGamesAdapter);
                 }
             });
@@ -146,7 +152,7 @@ public class UserDetailActivity extends AppCompatActivity {
 
                         gameList.add(game);
                     }
-                    collectionGamesAdapter = new CollectionGamesAdapter(UserDetailActivity.this, gameList);
+                    collectionGamesAdapter = new CollectionGamesAdapter(UserDetailActivity.this, gameList, userId, username);
                     binding.recyclerCollection.setAdapter(collectionGamesAdapter);
                 }
             });
