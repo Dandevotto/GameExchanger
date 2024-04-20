@@ -1,15 +1,25 @@
 package com.example.gameexchanger.adapters;
 
+
+
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.gameexchanger.R;
+
+import com.example.gameexchanger.activities.DetailActivity;
 import com.example.gameexchanger.model.Game;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
@@ -29,6 +39,19 @@ public class GamesAdapter extends FirestoreRecyclerAdapter<Game, GamesAdapter.Vi
         viewHolder.tvGameGenre.setText(game.getGenre());
         viewHolder.tvGameSystem.setText(game.getSystem());
         Glide.with(ctx).load(game.getImage()).into(viewHolder.imgGame);
+
+        viewHolder.gameCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ctx, DetailActivity.class);
+                intent.putExtra("title", game.getTitle());
+                intent.putExtra("genre", game.getGenre());
+                intent.putExtra("system", game.getSystem());
+                intent.putExtra("image", game.getImage());
+                intent.putExtra("id", game.getId());
+                ctx.startActivity(intent);
+            }
+        });
     }
 
     // Instanciampos la clase ViewHolder
@@ -46,7 +69,7 @@ public class GamesAdapter extends FirestoreRecyclerAdapter<Game, GamesAdapter.Vi
         TextView tvGameSystem;
         TextView tvGameGenre;
         ImageView imgGame;
-
+        CardView gameCardView;
 
 
         public ViewHolder(View view){
@@ -56,6 +79,7 @@ public class GamesAdapter extends FirestoreRecyclerAdapter<Game, GamesAdapter.Vi
             tvGameSystem = view.findViewById(R.id.tvGameSystem);
             tvGameGenre = view.findViewById(R.id.tvGameGenre);
             imgGame = view.findViewById(R.id.imgGame);
+            gameCardView = view.findViewById(R.id.gameCardView);
 
         }
 

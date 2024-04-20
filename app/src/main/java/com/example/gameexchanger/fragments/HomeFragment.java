@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
         auth = new AuthConnector();
         gameConnector = new GameConnector();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         binding.gamesList.setLayoutManager(gridLayoutManager);
 
         return binding.getRoot();
