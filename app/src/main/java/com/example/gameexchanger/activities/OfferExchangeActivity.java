@@ -1,12 +1,14 @@
 package com.example.gameexchanger.activities;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 
 import com.bumptech.glide.Glide;
 import com.example.gameexchanger.R;
@@ -15,11 +17,12 @@ import com.example.gameexchanger.databinding.ActivityOfferExchangeBinding;
 public class OfferExchangeActivity extends AppCompatActivity {
 
     private ActivityOfferExchangeBinding binding;
-    private String userId;
-    private String gameId;
-    private String gameSystem;
-    private String gameImage;
-    private String gameTitle;
+    private String offerImageGameURL;
+    private String offerGameTitle;
+    private String exchangeGameTitle;
+    private String exchangeImageGameURL;
+    private String username;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +30,29 @@ public class OfferExchangeActivity extends AppCompatActivity {
         binding = ActivityOfferExchangeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        userId = getIntent().getStringExtra("userId");
-        gameId = getIntent().getStringExtra("gameId");
-        gameSystem = getIntent().getStringExtra("gameSystem");
-        gameImage = getIntent().getStringExtra("gameImage");
-        gameTitle = getIntent().getStringExtra("gameTitle");
+        username = getIntent().getStringExtra("username");
+        exchangeGameTitle = getIntent().getStringExtra("exchangeGameTitle");
+        offerGameTitle = getIntent().getStringExtra("offerGameTitle");
+        offerImageGameURL = getIntent().getStringExtra("offerImageGameURL");
+        exchangeImageGameURL = getIntent().getStringExtra("exchangeImageGameURL");
 
+        binding.tvOffer.setText("Ofreces a "+username+":");
+        binding.tvReceiveOffer.setText("A cambio de: ");
+        binding.tvOfferGameTitle.setText(offerGameTitle);
+        binding.tvExchangeGameTitle.setText(exchangeGameTitle);
 
-        binding.tvGameSystem.setText(gameSystem);
-        binding.tvActivityTitle.setText("¿Qué juego de tu colección le vas a ofrecer a "+userId+" a cambio de su "+gameTitle);
-        Glide.with(this).load(gameImage).into(binding.imageDetail);
+        Glide.with(this).load(exchangeImageGameURL).into(binding.ivExchangeGame);
+        Glide.with(this).load(offerImageGameURL).into(binding.ivOfferedGame);
+
+        binding.btConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmExchange();
+            }
+        });
+    }
+
+    private void confirmExchange(){
+
     }
 }

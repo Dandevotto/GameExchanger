@@ -18,18 +18,19 @@ import com.example.gameexchanger.activities.OfferExchangeActivity;
 import com.example.gameexchanger.model.Game;
 import java.util.List;
 
-
-public class CollectionGamesAdapter extends RecyclerView.Adapter<WishGamesAdapter.MyViewHolder>{
+public class WishGamesAdapter extends RecyclerView.Adapter<WishGamesAdapter.MyViewHolder>{
 
     Context ctx;
     List<Game> games;
-    String mainGameTitle;
+    String exchangeGameTitle;
+    String exchangeImageGameURL;
     String username;
-    public CollectionGamesAdapter(Context ctx, List<Game> games, String username, String mainGameTitle){
+    public WishGamesAdapter(Context ctx, List<Game> games, String username, String exchangeGameTitle, String exchangeImageGameURL){
         this.ctx = ctx;
         this.games = games;
         this.username = username;
-        this.mainGameTitle = mainGameTitle;
+        this.exchangeGameTitle = exchangeGameTitle;
+        this.exchangeImageGameURL = exchangeImageGameURL;
     }
 
     @NonNull
@@ -48,7 +49,7 @@ public class CollectionGamesAdapter extends RecyclerView.Adapter<WishGamesAdapte
         holder.gameCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogOfferExchange(username, games.get(position).getTitle());
+                dialogOfferExchange(username, exchangeGameTitle, games.get(position).getTitle(), games.get(position).getImage(), exchangeImageGameURL);
             }
         });
     }
@@ -79,21 +80,21 @@ public class CollectionGamesAdapter extends RecyclerView.Adapter<WishGamesAdapte
     }
 
     // Mostramos un AlertDialog que pregunta al usuario si quiere proponer un intercambio al hacer click
-    // sobre un juego en un perfil de usuario.
-    public void dialogOfferExchange(String username, String mainGameTitle){
+    // sobre un juego en un perfil de usuario. Le pasamos por parámetros el ID del juego y del usuario
+    // para enviarlo a través del Intent
+    public void dialogOfferExchange(String username, String exchangeGameTitle, String offerGameTtile, String offerImageGameURL, String exchangeImageGameURL){
         AlertDialog dialog = new AlertDialog.Builder(ctx)
-                .setTitle("Ofrecer a "+username+" un juego de tu colección a cambio del "+mainGameTitle)
+                .setTitle("Ofrecer a "+username+" el "+offerGameTtile+" a cambio de "+exchangeGameTitle)
                 .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(ctx, OfferExchangeActivity.class);
-                        /*
-                        intent.putExtra("gameId", gameId);
-                        intent.putExtra("username", username.toUpperCase());
-                        intent.putExtra("userId", userId);
-                        intent.putExtra("gameTitle", gameTitle);
-                        intent.putExtra("gameImage", gameImage);
-                        */
+
+                        intent.putExtra("username", username);
+                        intent.putExtra("exchangeGameTitle", exchangeGameTitle);
+                        intent.putExtra("offerGameTitle", offerGameTtile);
+                        intent.putExtra("offerImageGameURL", offerImageGameURL);
+                        intent.putExtra("exchangeImageGameURL", exchangeImageGameURL);
 
                         ctx.startActivity(intent);
                     }

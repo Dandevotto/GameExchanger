@@ -19,11 +19,15 @@ public class UsersAdapter extends FirestoreRecyclerAdapter<User, UsersAdapter.Vi
 
     Context ctx;
     String gameImage;
+    String gameId;
+    String gameTitle;
 
-    public UsersAdapter(FirestoreRecyclerOptions<User> options, Context ctx, String gameImage){
+    public UsersAdapter(FirestoreRecyclerOptions<User> options, Context ctx, String gameImage, String gameId, String gameTitle){
         super(options);
         this.ctx = ctx;
         this.gameImage = gameImage;
+        this.gameId = gameId;
+        this.gameTitle = gameTitle;
     }
 
     @Override
@@ -37,8 +41,14 @@ public class UsersAdapter extends FirestoreRecyclerAdapter<User, UsersAdapter.Vi
             public void onClick(View v) {
 
                 Intent intent = new Intent(ctx, UserDetailActivity.class);
-                intent.putExtra("username", user.getUsername());
+
+                // GAME
+                intent.putExtra("gameId", gameId);
                 intent.putExtra("gameImage", gameImage);
+                intent.putExtra("gameTitle", gameTitle);
+
+                // USER
+                intent.putExtra("username", user.getUsername());
                 intent.putStringArrayListExtra("gamesCollection", user.getGamesCollection());
                 intent.putStringArrayListExtra("wishList", user.getWishList());
                 intent.putExtra("userId", user.getId());

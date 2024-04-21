@@ -19,7 +19,7 @@
             android:name=".activities.UserDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.DetailActivity"
+            android:name=".activities.GameDetailActivity"
             android:exported="false" />
         <activity
             android:name=".activities.HomeActivity"

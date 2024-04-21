@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 
-public class DetailActivity extends AppCompatActivity {
+public class GameDetailActivity extends AppCompatActivity {
 
     private ActivityDetailBinding binding;
     private String gameId;
@@ -52,19 +52,20 @@ public class DetailActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         binding.userRecycler.setLayoutManager(linearLayoutManager);
         Glide.with(this).load(gameImageURL).into(binding.imageDetail);
+        //getGameInfo();
         getUsers();
         //getGameInfo();
     }
 
 
-    // Método que nos muestra todos los usuarios que tienen ese juego en su colección para cambiarlo
+    // Mediante el ID del juego que se está mostrando obtenemos los campos que necesitamos
     private void getGameInfo(){
         gameConnector.getGame(gameId).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
-                    String titleDetail = documentSnapshot.getString("title");
-                    binding.tvTitleDetail.setText(titleDetail);
+                    gameTitle = documentSnapshot.getString("title");
+                    binding.tvTitleDetail.setText(gameTitle);
                 }
             }
         });
@@ -79,10 +80,12 @@ public class DetailActivity extends AppCompatActivity {
 
     }*/
 
+
+    // Método que nos muestra todos los usuarios que tienen ese juego en su colección para cambiarlo
     private void getUsers(){
         Query query = userConnector.getUserStoredGame(gameId);
         FirestoreRecyclerOptions<User> users = new FirestoreRecyclerOptions.Builder<User>().setQuery(query, User.class).build();
-        usersAdapter = new UsersAdapter(users, DetailActivity.this, gameImageURL);
+        usersAdapter = new UsersAdapter(users, GameDetailActivity.this, gameImageURL, gameId, gameTitle);
         binding.userRecycler.setAdapter(usersAdapter);
         usersAdapter.startListening();
 
