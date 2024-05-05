@@ -14,6 +14,7 @@ import com.example.gameexchanger.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -85,6 +86,9 @@ public class RegisterActivity extends AppCompatActivity {
                     user.setId(userId);
                     user.setUsername(username);
                     user.setEmail(email);
+                    // Creamos las listas de juegos (colección y lista de deseos) vacías
+                    user.setGamesCollection(new ArrayList<>());
+                    user.setWishList(new ArrayList<>());
 
                     userConnector.createUser(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
@@ -107,11 +111,5 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
     }
 }

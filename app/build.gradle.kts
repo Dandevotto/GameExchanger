@@ -31,6 +31,8 @@ android {
     buildFeatures{
         viewBinding = true
     }
+
+
 }
 
 dependencies {
@@ -40,11 +42,15 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(platform(libs.firebase.bom))
+    //noinspection UseTomlInstead
     implementation("com.google.firebase:firebase-firestore")
-    implementation ("com.firebaseui:firebase-ui-firestore:8.0.2")
-    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation (libs.firebase.ui.firestore)
+    implementation (libs.glide)
+    implementation ("com.github.mancj:MaterialSearchBar:0.8.5")
 }

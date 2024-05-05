@@ -22,15 +22,28 @@ public class WishGamesAdapter extends RecyclerView.Adapter<WishGamesAdapter.MyVi
 
     Context ctx;
     List<Game> games;
-    String exchangeGameTitle;
-    String exchangeImageGameURL;
-    String username;
-    public WishGamesAdapter(Context ctx, List<Game> games, String username, String exchangeGameTitle, String exchangeImageGameURL){
+
+    // USERS
+    String user2Id;
+    String user2Name;
+    String user1Id;
+
+
+    // JUEGO DEL USUARIO 2
+    String user2GameId;
+    String user2GameTitle;
+    String user2GameImageURL;
+
+
+    public WishGamesAdapter(Context ctx, List<Game> games, String user2Id, String user2Name, String user1Id, String user2GameId, String user2GameTitle, String user2GameImageURL) {
         this.ctx = ctx;
         this.games = games;
-        this.username = username;
-        this.exchangeGameTitle = exchangeGameTitle;
-        this.exchangeImageGameURL = exchangeImageGameURL;
+        this.user2Id = user2Id;
+        this.user2Name = user2Name;
+        this.user1Id = user1Id;
+        this.user2GameId = user2GameId;
+        this.user2GameTitle = user2GameTitle;
+        this.user2GameImageURL = user2GameImageURL;
     }
 
     @NonNull
@@ -40,6 +53,7 @@ public class WishGamesAdapter extends RecyclerView.Adapter<WishGamesAdapter.MyVi
         return new WishGamesAdapter.MyViewHolder(view);
     }
 
+    // RECOGEMOS VARIABLES "OFFER"
     @Override
     public void onBindViewHolder(@NonNull WishGamesAdapter.MyViewHolder holder, int position) {
         holder.tvGameTitle.setText(games.get(position).getTitle());
@@ -49,7 +63,7 @@ public class WishGamesAdapter extends RecyclerView.Adapter<WishGamesAdapter.MyVi
         holder.gameCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogOfferExchange(username, exchangeGameTitle, games.get(position).getTitle(), games.get(position).getImage(), exchangeImageGameURL);
+                dialogOfferExchange(games.get(position).getTitle(), games.get(position).getId(), games.get(position).getImage());
             }
         });
     }
@@ -82,19 +96,29 @@ public class WishGamesAdapter extends RecyclerView.Adapter<WishGamesAdapter.MyVi
     // Mostramos un AlertDialog que pregunta al usuario si quiere proponer un intercambio al hacer click
     // sobre un juego en un perfil de usuario. Le pasamos por parámetros el ID del juego y del usuario
     // para enviarlo a través del Intent
-    public void dialogOfferExchange(String username, String exchangeGameTitle, String offerGameTtile, String offerImageGameURL, String exchangeImageGameURL){
+    public void dialogOfferExchange(String user1GameTitle, String user1GameId, String user1GameImageURL){
         AlertDialog dialog = new AlertDialog.Builder(ctx)
-                .setTitle("Ofrecer a "+username+" el "+offerGameTtile+" a cambio de "+exchangeGameTitle)
+                .setTitle("¿OFRECER INTERCAMBIO?")
+                .setMessage("Ofrecer a "+user2Name+" el "+user1GameTitle+" a cambio de "+user2GameTitle)
                 .setPositiveButton("SÍ", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(ctx, OfferExchangeActivity.class);
 
-                        intent.putExtra("username", username);
-                        intent.putExtra("exchangeGameTitle", exchangeGameTitle);
-                        intent.putExtra("offerGameTitle", offerGameTtile);
-                        intent.putExtra("offerImageGameURL", offerImageGameURL);
-                        intent.putExtra("exchangeImageGameURL", exchangeImageGameURL);
+                        // USUARIO AL QUE VAMOS A OFRECER UN INTERCAMBIO
+                        intent.putExtra("user2Id", user2Id);
+                        intent.putExtra("user2Name", user2Name);
+
+                        // JUEGO QUE VAMOS A OFRECER
+                        intent.putExtra("user1GameId", user1GameId);
+                        intent.putExtra("user1GameTitle", user1GameTitle);
+                        intent.putExtra("user1GameImageURL", user1GameImageURL);
+
+
+                        // JUEGO POR EL CUAL LO VAMOS A CAMBIAR
+                        intent.putExtra("user2GameId", user2GameId);
+                        intent.putExtra("user2GameTitle", user2GameTitle);
+                        intent.putExtra("user2GameImageURL", user2GameImageURL);
 
                         ctx.startActivity(intent);
                     }

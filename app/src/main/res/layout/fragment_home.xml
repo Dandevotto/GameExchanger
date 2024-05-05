@@ -6,17 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
-
+        <com.mancj.materialsearchbar.MaterialSearchBar
+            android:id="@+id/searchBar"
+            style="@style/MaterialSearchBarLight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:mt_hint="Buscar..."
+            app:mt_maxSuggestionsCount="10"
+            app:mt_placeholder="Buscar..."
+            app:mt_speechMode="false" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gamesList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginBottom="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/searchBar" />
 
 
 

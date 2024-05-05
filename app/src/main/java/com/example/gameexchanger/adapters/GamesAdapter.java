@@ -79,9 +79,7 @@ public class GamesAdapter extends FirestoreRecyclerAdapter<Game, GamesAdapter.Vi
             gameCardView = view.findViewById(R.id.gameCardView);
 
         }
-
-
-
     }
+
 
 }
