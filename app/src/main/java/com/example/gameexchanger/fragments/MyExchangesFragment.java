@@ -68,8 +68,6 @@ public class MyExchangesFragment extends Fragment {
         binding.myExchangesRecycler.setAdapter(exchangesAdapter);
         // Escucha en tiempo real los cambios realizados en la base de datos
         exchangesAdapter.startListening();
-
-
     }
 
 

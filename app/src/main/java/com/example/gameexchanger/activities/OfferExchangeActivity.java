@@ -109,6 +109,5 @@ public class OfferExchangeActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 }

@@ -85,7 +85,6 @@ public class MyWishListFragment extends Fragment {
                     List<String> wishList = (List<String>) documentSnapshot.get("wishList");
                     // Verifica si wishList no es nulo antes de intentar asignarlo a nyWishList
                     if (wishList != null) {
-                        // Asigna directamente gamesCollection a myCollectionGames
                         myWishList = wishList;
                         getGames(myWishList);
                     }
@@ -102,7 +101,7 @@ public class MyWishListFragment extends Fragment {
     // JUEGOS QUE COINCIDEN CON ESE ID
     public void getGames(List<String> gameList){
         List<Game> games = new ArrayList<>();
-        // Recorremos la lista de juegos del usuario y los comparamos con la colection de juegos en Firebase, si coincide alguno significa que el
+        // Recorremos la lista de juegos del usuario y los comparamos con la colección de juegos en Firebase, si coincide alguno significa que el
         // usuario lo tiene en su lista, por lo que lo añadimos a la List games
         for(String id : gameList){
             gameConnector.getGameById(id).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -115,7 +114,6 @@ public class MyWishListFragment extends Fragment {
                         String image = documentSnapshot.getString("image");
                         String system = documentSnapshot.getString("system");
                         String title = documentSnapshot.getString("title");
-
 
                         Game game = new Game();
                         game.setId(id);
@@ -133,5 +131,4 @@ public class MyWishListFragment extends Fragment {
             });
         }
     }
-
 }

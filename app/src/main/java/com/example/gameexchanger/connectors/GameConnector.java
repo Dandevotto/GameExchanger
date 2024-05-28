@@ -29,11 +29,12 @@ public class GameConnector {
         return gamesCollection.whereEqualTo("id", id);
     }
 
+    // OBTIENE LOS JUEGOS QUE COINCIDEN CON UN TÍTULO -> PARA LA BARRA DE BÚSQUEDA
     public Query getGameByTitle(String gameTitle){
         return gamesCollection.orderBy("title").startAt(gameTitle).endAt(gameTitle+'\uf8ff');
     }
 
-    // NOS TRAEMOS DE LA BBDD TODOS LOS JUEGOS QUE CUYO ID NO ESTÁ INCLUIDO EN LA LISTA QUE PASAMOS POR PARÁMETRO
+    // NOS TRAEMOS DE LA BBDD TODOS LOS JUEGOS CUYO ID NO ESTÁ INCLUIDO EN LA LISTA QUE PASAMOS POR PARÁMETRO
     public Query getAllGamesWithoutAnID(List<String> ids){
         return gamesCollection.whereNotIn("id", ids);
     }
